@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chatapp</title>
+    <style>
+        header {
+            width: 100%;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* ヘッダ固定用CSS */
+            position: fixed;
+            /* ヘッダーを固定する */
+            top: 0;
+            /* 上部から配置の基準位置を決める */
+            left: 0;
+            /* 左から配置の基準位置を決める */
+            width: 100%;
+            /* ヘッダーの横幅を指定する */
+            height: 35px;
+            /* ヘッダーの高さを指定する */
+            padding: 10px;
+            /* ヘッダーの余白を指定する(上下左右) */
+        }
+
+
+
+        footer {
+            width: 100%;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            bottom: 0;
+            height: 50px;
+
+        }
+
+        .space-box {
+            height: 70px;
+        }
+
+        body {
+            background-color: #18b16f;
+            /* スクロールの為に高さを固定する */
+            min-height: 100vh;
+            width: 100%;
+            /* コンテンツの横幅を指定する */
+            overflow: auto;
+            /* コンテンツの表示を自動に設定（スクロール） */
+
+            display: flex;
+            flex-flow: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        #output li {
+            background: rgb(247, 247, 217);
+        }
+
+        .header-menu {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .all-wrapper {}
+
+
+        h1 {
+            text-align: center;
+            font-size: 22px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 10px;
+        }
+
+
+        p {
+            font-size: 12px;
+        }
+
+        li {
+            background-color: #18b16f;
+            text-align: left;
+        }
+
+        .call-i {
+            width: 28px;
+        }
+
+        .my-i {
+            width: 44px;
+            text-align: left;
+            padding-right: 10px;
+        }
+
+        .output-wrapper {
+            text-align: center;
+            width: 450px;
+        }
+
+        textarea {
+            resize: none;
+            width: 400px;
+
+        }
+
+        input {
+            width: 336px;
+        }
+
+        #output .hukudashi {
+            background-color: white;
+            border-radius: 10px 10px 0 0;
+            margin-top: -10px;
+        }
+
+        #send {
+            height: 30px;
+            width: 80px;
+        }
+
+        .footer {
+            color: white;
+            font-size: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon {
+            width: 20px;
+            filter: brightness(0);
+        }
+
+        .icon-footer {
+            background-color: black;
+            height: 50px;
+        }
+    </style>
+    <link rel=“stylesheet” href=“css/index.css”>
+</head>
+
+<body>
+    <header>
+        <div class="header-menu">
+            <div><img class="my-i" src="img/my.png" alt=""></div>
+            <div>
+                <h1>ore no chat</h1>
+            </div>
+            <div>
+
+            </div>
+
+        </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="all-wrapper">
+            <div class="space-box"></div>
+            <div class="hukudashi">
+                <ul id="form">
+                    <li>
+                        <label for="name">name : </label>
+                        <input type="text" id="name">
+                    </li>
+                    <li>
+                        <textarea name="" id="text" cols="30" rows="10" width="450px"></textarea>
+                    </li>
+                    <li>
+                        <button id="send">send</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="output-wrapper">
+                <ul>
+                    <ul id="output"></ul>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="icon-footer">
+            <img class="icon" src="img/information-w.png" alt="">
+            <img class="icon" src="img/phone-call-w.png" alt="">
+            <img class="icon" src="img/writing-w.png" alt="">
+            <img class="icon" src="img/compact-disc-w.png" alt="">
+        </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyDMNm70KayWurKN7_5J_3OO6-jEG5rFgW4",
+            authDomain: "chat-sample-71a89.firebaseapp.com",
+            databaseURL: "https://chat-sample-71a89.firebaseio.com",
+            projectId: "chat-sample-71a89",
+            storageBucket: "chat-sample-71a89.appspot.com",
+            messagingSenderId: "1067549103929",
+            appId: "1:1067549103929:web:c13b68c8eca494472b7ae8",
+            measurementId: "G-TCWELJD9Y4"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+
+    <script>
+        // 日時をいい感じの形式にする関数
+        function convertFromFirestoreTimestampToDatetime(timestamp) {
+            const _d = timestamp ? new Date(timestamp * 1000) : new Date();
+            const Y = _d.getFullYear();
+            const m = (_d.getMonth() + 1).toString().padStart(2, '0');
+            const d = _d.getDate().toString().padStart(2, '0');
+            const H = _d.getHours().toString().padStart(2, '0');
+            const i = _d.getMinutes().toString().padStart(2, '0');
+            const s = _d.getSeconds().toString().padStart(2, '0');
+            return `${Y}/${m}/${d} ${H}:${i}:${s}`;
+        }
+
+        // データベースの設定を記述
+        const db = firebase.firestore().collection('chat');
+
+        // 送信ボタンクリック時にデータを送信する処理
+        $('#send').on('click', function () {
+
+            db.add({ // dbが送信先 送信データはオブジェクトの形
+                name: $('#name').val(), // inputの入力値
+                text: $('#text').val(), // textareaの入力値
+                time: firebase.firestore.FieldValue.serverTimestamp(), // 登録日時
+            });
+            // 送信後にtextareaを空にする処理
+            $('#text').val('');
+
+        });
+
+        //ここから写経文を手打ち79pのみ
+        db.orderBy('time', 'desc').onSnapshot(function (querySnapshot) {
+            let str = '';
+            querySnapshot.docs.forEach(function (doc) {
+                const id = doc.id;
+                const data = doc.data();
+                const datetime = convertFromFirestoreTimestampToDatetime(data.time.seconds);
+                str += '<div class="hukudashi">';
+                str += '<ul>';
+                str += '<li>';
+                str += '<p>name: ' + data.name + '</p>';  //key名を追加
+                str += '<p>message: ' + data.text + '</p>';
+                str += '<p>' + datetime + '</p>';
+                str += '</li>';
+                str += '</ul>';
+                str += '</div>';
+            });
+
+            $('#output').html(str);
+
+
+
+        });
+    </script>
+
+</body>
+
+</html>
